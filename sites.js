@@ -24,7 +24,7 @@ const SITES = [
   // VAT etc purposes"). ---
   {
     id: "secretsales-com",
-    label: "secretsales.com (UK)",
+    label: "secretsales.com",
     lines: [
       "Secret Sales Group (Company Number 06264879)",
       "167-169 Great Portland Street, 5th Floor, London, W1W 5PF.",
@@ -38,7 +38,7 @@ const SITES = [
   // don't. ---
   {
     id: "secretsales-nl",
-    label: "secretsales.nl (NL)",
+    label: "secretsales.nl",
     lines: [
       "Secret Sales Group (Business No. 763684)",
       "Suite 7 The Courtyard, Carmanhall Road, Sandyford, Dublin 18, D18 NW62, Ireland.",
@@ -47,7 +47,7 @@ const SITES = [
   },
   {
     id: "afound-com",
-    label: "afound.com (Sweden)",
+    label: "afound.com",
     lines: [
       "Afound is owned and operated by Secret Sales Group (Business No. 763684)",
       "Suite 7 The Courtyard, Carmanhall Road, Sandyford, Dublin 18, D18 NW62, Ireland.",
@@ -56,7 +56,7 @@ const SITES = [
   },
   {
     id: "dreivip-com",
-    label: "dreivip.com (Spain)",
+    label: "dreivip.com",
     lines: [
       "DreiVIP (Business No. 763684)",
       "Suite 7 The Courtyard, Carmanhall Road, Sandyford, Dublin 18, D18 NW62, Ireland.",
@@ -108,8 +108,9 @@ const SITES = [
     label: "dress-for-less.de",
     lines: [
       "Dress-For-Less GmbH",
-      "Regus Technologiepark Bremen, Karl-Ferdinand-Braun-Straße 5, 28359 Bremen.",
-      "VAT Reference 343746881",
+      "Dress-For-Less GmbH, im Besitz der Secret Sale Group LTD (Firmennr. 06264879)",
+      "Geschäftsanschrift: Regus Technologiepark Bremen, Karl-Ferdinand-Braun-Straße 5, 28359 Bremen",
+      "Betrieben von Cherry Core Limited (Firmennr. 763684)",
     ],
   },
 
