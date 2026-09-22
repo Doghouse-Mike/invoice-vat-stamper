@@ -107,15 +107,14 @@ const SITES = [
     id: "dress-for-less-de",
     label: "dress-for-less.de",
     lines: [
-      "Dress-For-Less GmbH",
       "Dress-For-Less GmbH, im Besitz der Secret Sale Group LTD (Firmennr. 06264879)",
       "Geschäftsanschrift: Regus Technologiepark Bremen, Karl-Ferdinand-Braun-Straße 5, 28359 Bremen",
       "Betrieben von Cherry Core Limited (Firmennr. 763684)",
     ],
-    // 4 lines instead of the usual 3 (2026-09-22: overran the header banner
-    // and ran past the page's right edge at the default size). Nudged up
-    // and shrunk to fit — re-check if this site's lines change again.
-    stamp: { firstLineY: 787.5, lineHeight: 10.5, fontSize: 9.5 },
+    // These lines are longer than other sites' (2026-09-22: ran past the
+    // page's right edge at the default font size). Shrunk to fit — re-check
+    // if this site's lines change again.
+    stamp: { fontSize: 9.5 },
   },
 
   // Freeform fallback: type the block in by hand for a one-off / new site
