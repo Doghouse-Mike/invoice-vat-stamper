@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Invoice VAT Stamper</title>
+<style>
+  :root {
+    --bg: #f6f5f3;
+    --panel: #ffffff;
+    --ink: #1c1c1c;
+    --muted: #6b6b6b;
+    --line: #e0ddd8;
+    --accent: #1c1c1c;
+    --accent-ink: #ffffff;
+    --ok: #1c7d3e;
+    --err: #b3261e;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #16161a;
+      --panel: #1f1f24;
+      --ink: #ecebe8;
+      --muted: #9a9a9a;
+      --line: #33333a;
+      --accent: #ecebe8;
+      --accent-ink: #16161a;
+      --ok: #5fd485;
+      --err: #ff8a80;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #16161a;
+    --panel: #1f1f24;
+    --ink: #ecebe8;
+    --muted: #9a9a9a;
+    --line: #33333a;
+    --accent: #ecebe8;
+    --accent-ink: #16161a;
+    --ok: #5fd485;
+    --err: #ff8a80;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.5 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 40px 16px 80px;
+  }
+  h1 {
+    font-size: 1.4rem;
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+  .sub {
+    color: var(--muted);
+    margin: 0 0 28px;
+    font-size: 0.92rem;
+  }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+  select, textarea {
+    width: 100%;
+    font: inherit;
+    color: var(--ink);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  select { margin-bottom: 18px; }
+  textarea {
+    resize: vertical;
+    min-height: 70px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.85rem;
+  }
+  #customBlock { display: none; margin-bottom: 18px; }
+  .dropzone {
+    border: 1.5px dashed var(--line);
+    border-radius: 10px;
+    padding: 28px 16px;
+    text-align: center;
+    color: var(--muted);
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .dropzone.drag {
+    border-color: var(--ink);
+    background: var(--bg);
+  }
+  .dropzone input { display: none; }
+  .filelist {
+    list-style: none;
+    padding: 0;
+    margin: 14px 0 0;
+    font-size: 0.88rem;
+  }
+  .filelist li {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 6px 0;
+    border-top: 1px solid var(--line);
+  }
+  .filelist li:first-child { border-top: none; }
+  .filelist .status { color: var(--muted); white-space: nowrap; }
+  .filelist .status.ok { color: var(--ok); }
+  .filelist .status.err { color: var(--err); }
+  button {
+    width: 100%;
+    font: inherit;
+    font-weight: 600;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border: none;
+    border-radius: 8px;
+    padding: 13px 16px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .note {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 10px;
+  }
+  footer {
+    color: var(--muted);
+    font-size: 0.8rem;
+    text-align: center;
+    margin-top: 32px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Invoice VAT Stamper</h1>
+  <p class="sub">Upload one or more order-confirmation PDFs, pick the site they were sold on, get back PDFs with that site's VAT / legal block stamped into the header. Everything happens in your browser — files are never uploaded anywhere.</p>
+
+  <div class="panel">
+    <label for="site">Site</label>
+    <select id="site"></select>
+
+    <div id="customBlock">
+      <label for="customText">Custom block (one line each)</label>
+      <textarea id="customText" rows="3" placeholder="Legal Entity Name (Company Number 00000000)&#10;Registered Address, City, Postcode.&#10;VAT Reference 000000000"></textarea>
+    </div>
+
+    <label for="fileInput">PDFs</label>
+    <div class="dropzone" id="dropzone">
+      Drop PDF files here, or click to choose
+      <input id="fileInput" type="file" accept="application/pdf" multiple />
+    </div>
+    <ul class="filelist" id="filelist"></ul>
+
+    <button id="stampBtn" disabled>Stamp &amp; download</button>
+    <p class="note" id="statusNote"></p>
+  </div>
+
+  <footer>Position tuned for the standard invoice template. If a PDF uses a different layout, the block may land in the wrong spot — check the output before sending it anywhere.</footer>
+</div>
+
+<script src="vendor/pdf-lib.min.js"></script>
+<script src="vendor/jszip.min.js"></script>
+<script src="sites.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
