@@ -159,6 +159,10 @@
       download(zipBytes, "stamped-invoices.zip");
     }
 
+    if (results.length && window.goatcounter && window.goatcounter.count) {
+      window.goatcounter.count({ path: "stamp", title: "Stamped invoices", event: true });
+    }
+
     statusNote.textContent = `${results.length} of ${files.length} file(s) stamped.`;
     statusNote.style.color = results.length === files.length ? "var(--ok)" : "var(--err)";
     stampBtn.disabled = files.length === 0;
